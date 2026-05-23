@@ -35,3 +35,9 @@ int32_t main()
 
     return 0;
 }
+
+for(int i=0;i<k;i++){
+                for(int j=i;j<n;j+=k){
+
+                }
+            }
