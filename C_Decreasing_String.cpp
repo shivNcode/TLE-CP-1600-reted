@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <map>
 #include <stack>
+#include <queue>
+
 using namespace std;
 
 #define int long long
@@ -18,47 +20,53 @@ mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 void Solve()
 {
-    string s; cin >> s;
-    int k; cin >> k;
-    int n = s.size();
-    //cout << n << endl;
-    string temp = s;
-    sort(temp.begin() , temp.end() , greater<char>());
-    //cout << temp << endl;
-    int val = n;
+    string str;
+    cin >> str;
+
+    int k;
+    cin >> k;
+
+    int len = str.size();
+
     int cnt = 0;
-    while(k-val>0){
-        k-=val;
-        val--;
+    int cur = len;
+
+    while (k - cur > 0)
+    {
+        k -= cur;
+        cur--;
         cnt++;
     }
-   // cout << cnt << endl;
-    map<char,int> mpp;
-    for(int i=0;i<cnt;i++){
-        mpp[temp[i]]++;
-    }
-    //cout << k << endl;
-    for(int i=0;i<n;i++){
-       // cout << s[i] << " ";
-        if(k==0 && mpp[s[i]]<=0){
-            cout << s[i];
-            //cout << "got " <<endl;
-            break;
-        }
-        if(mpp[s[i]]>0){
-            //cout << 1 << " "<< endl;
 
-            mpp[s[i]]--;
-        }else{
-             //cout << 2 << " " <<endl;
-            k--;
+    string ans;
+    stack<char> st;
+
+    for (char ch : str)
+    {
+        while (!st.empty() && cnt > 0 && st.top() > ch)
+        {
+            st.pop();
+            cnt--;
         }
-        if(k==0 && mpp[s[i]]<=0){
-            cout << s[i];
-            //cout << "got " <<endl;
-            break;
-        }
+
+        st.push(ch);
     }
+
+    while (cnt > 0)
+    {
+        st.pop();
+        cnt--;
+    }
+
+    while (!st.empty())
+    {
+        ans.push_back(st.top());
+        st.pop();
+    }
+
+    reverse(all(ans));
+
+    cout << ans[k - 1];
 }
 
 int32_t main()
@@ -68,12 +76,11 @@ int32_t main()
 
     int t = 1;
     cin >> t;
+
     while (t--)
     {
         Solve();
-
     }
-   // cout << endl;
 
     return 0;
 }
