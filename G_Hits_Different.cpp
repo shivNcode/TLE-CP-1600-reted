@@ -18,7 +18,7 @@ mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 void Solve()
 {
-
+    
 }
 
 int32_t main()
